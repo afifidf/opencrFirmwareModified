@@ -89,6 +89,15 @@ void dxl_node_op3_init(void)
   dxl_node_write_byte(27, (0x00<<0));
 
 
+  // auto gyro calibration at startup
+  IMU.SEN.gyro_cali_start();
+  uint32_t cali_timeout = millis();
+  while (IMU.SEN.gyro_cali_get_done() == false)
+  {
+    IMU.update();
+    if (millis() - cali_timeout > 5000) break;
+  }
+
 
   dxlSetId(&dxl_sp, p_dxl_mem->ID);
   dxlOpenPort(&dxl_sp, 0, p_dxl_mem->Baud);
@@ -400,7 +409,7 @@ void dxl_node_op3_reset(void)
 
   dxl_hw_op3_set_offset(0, (float)p_dxl_mem->Roll_Offset/10.);
   dxl_hw_op3_set_offset(1, (float)p_dxl_mem->Pitch_Offset/10.);
-  //dxl_hw_op3_set_offset(2, (float)p_dxl_mem->Yaw_Offset/10.);
+  dxl_hw_op3_set_offset(2, (float)p_dxl_mem->Yaw_Offset/10.);
 }
 
 
