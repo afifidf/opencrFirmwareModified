@@ -90,12 +90,16 @@ void dxl_node_op3_init(void)
 
 
   // auto gyro calibration at startup
-  IMU.SEN.gyro_cali_start();
+  dxl_hw_op3_start_gyro_cali();
+
   uint32_t cali_timeout = millis();
-  while (IMU.SEN.gyro_cali_get_done() == false)
+
+  while (!dxl_hw_op3_get_gyro_cali_done())
   {
-    IMU.update();
-    if (millis() - cali_timeout > 5000) break;
+      dxl_hw_op3_update();
+
+      if (millis() - cali_timeout > 5000) 
+          break;
   }
 
 
