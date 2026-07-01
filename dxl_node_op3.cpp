@@ -89,7 +89,7 @@ void dxl_node_op3_init(void)
   dxl_node_write_byte(27, (0x00<<0));
 
 
-  // auto gyro calibration at startup
+  // auto gyro calibration at startup!!!
   dxl_hw_op3_start_gyro_cali();
 
   uint32_t cali_timeout = millis();
@@ -995,7 +995,6 @@ dxl_error_t bulk_write(dxl_t *p_dxl)
 
   return ret;
 }
-
 
 extern uint32_t tx_led_count, rx_led_count;
 
